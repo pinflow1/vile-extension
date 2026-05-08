@@ -1,0 +1,46 @@
+{
+  "name": "vile-extension",
+  "displayName": "Vile - Code Safety Engine",
+  "description": "Analyze code changes for runtime risks using AI.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onLanguage:javascript", "onLanguage:typescript", "onLanguage:python", "onCommand:vile.analyze"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vile.analyze",
+        "title": "Vile: Analyze selection"
+      },
+      {
+        "command": "vile.login",
+        "title": "Vile: Login to Vile"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vile.analyze",
+          "group": "navigation",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  }
+}
