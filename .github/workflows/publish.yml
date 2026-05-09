@@ -1,0 +1,26 @@
+# .github/workflows/publish.yml
+
+name: Publish Extension
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+      - run: npm run compile
+
+      # This is the step that publishes to Open VSX
+      - name: Publish to Open VSX
+        uses: amilajack/publish-vscode-extension@v2
+        with:
+          pat: ${{ secrets.OPEN_VSX_TOKEN }}
+          registryUrl: https://open-vsx.org
