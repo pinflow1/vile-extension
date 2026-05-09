@@ -4,11 +4,6 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-env:
-  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-  BACKEND_URL: ${{ secrets.BACKEND_URL }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,11 +14,6 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm install -g @vscode/vsce
-      # Use envsubst to replace placeholders in .ts files
-      - run: |
-          sed -i "s|__SUPABASE_URL__|$SUPABASE_URL|g" src/auth.ts
-          sed -i "s|__SUPABASE_ANON_KEY__|$SUPABASE_ANON_KEY|g" src/auth.ts
-          sed -i "s|__BACKEND_URL__|$BACKEND_URL|g" src/api.ts
       - run: vsce package
       - uses: actions/upload-artifact@v4
         with:
