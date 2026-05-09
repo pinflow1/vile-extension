@@ -1,5 +1,6 @@
 {
   "name": "vile-extension",
+  "publisher": "pinflow1",
   "displayName": "Vile - Code Safety Engine",
   "description": "Analyze code changes for runtime risks using AI.",
   "version": "0.0.1",
