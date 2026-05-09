@@ -1,0 +1,15 @@
+# Exclude source code, tests, and misc files from the VSIX
+.vscode/**
+.gitignore
+.github/**
+node_modules/**
+src/**
+tsconfig.json
+.vscode-test/**
+.vscodeignore
+
+# Keep only the out/ folder and necessary meta files
+!out/**
+!package.json
+!LICENSE
+!README.md
