@@ -1,4 +1,5 @@
-const BACKEND_URL = 'https://vile-backend.vercel.app'; // Replace with your URL
+// This placeholder will be replaced by GitHub Actions during build
+const BACKEND_URL = '__BACKEND_URL__';
 
 export async function analyzeCode(code: string, token: string): Promise<any> {
   const response = await fetch(`${BACKEND_URL}/api/analyze`, {
