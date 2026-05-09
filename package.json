@@ -42,5 +42,10 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pinflow1/vile-extension.git"
+  },
+  "license": "MIT"
 }
