@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { createClient } from '@supabase/supabase-js';
 
-const BACKEND_URL = 'https://vile-backend.vercel.app'; // public
+const BACKEND_URL = 'https://vile-backend.vercel.app'; // your backend URL
 
 let supabaseClient: any = null;
 
@@ -29,10 +29,12 @@ export async function login(context: vscode.ExtensionContext): Promise<string | 
   const token = data.session?.access_token;
   if (token) {
     await context.secrets.store('vile_token', token);
+    return token;
   }
-  return token;
+  return null;
 }
 
 export async function getSupabaseToken(context: vscode.ExtensionContext): Promise<string | null> {
-  return await context.secrets.get('vile_token');
+  const token = await context.secrets.get('vile_token');
+  return token || null;
 }
