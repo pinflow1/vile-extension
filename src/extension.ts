@@ -6,8 +6,10 @@ import { getSupabaseToken, login } from './auth';
 export async function activate(context: vscode.ExtensionContext) {
   // Register login command
   let loginCmd = vscode.commands.registerCommand('vile.login', async () => {
-    await login();
-    vscode.window.showInformationMessage('Logged in to Vile!');
+    const token = await login(context);
+    if (token) {
+      vscode.window.showInformationMessage('Logged in to Vile!');
+    }
   });
 
   // Register analyze command
@@ -32,8 +34,7 @@ export async function activate(context: vscode.ExtensionContext) {
         'Login'
       );
       if (choice === 'Login') {
-        await login();
-        token = await getSupabaseToken(context);
+        token = await login(context);
       }
       if (!token) return;
     }
