@@ -1,9 +1,18 @@
 import * as vscode from 'vscode';
 import { createClient } from '@supabase/supabase-js';
 
-// These placeholders will be replaced by GitHub Actions during build
-const SUPABASE_URL = '__SUPABASE_URL__';
-const SUPABASE_ANON_KEY = '__SUPABASE_ANON_KEY__';
+const BACKEND_URL = 'https://vile-backend.vercel.app'; // public
+
+let supabaseClient: any = null;
+
+async function getSupabaseClient() {
+  if (supabaseClient) return supabaseClient;
+  const response = await fetch(`${BACKEND_URL}/api/config`);
+  if (!response.ok) throw new Error('Failed to fetch Supabase config');
+  const { supabaseUrl, supabaseAnonKey } = await response.json();
+  supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+  return supabaseClient;
+}
 
 export async function login(context: vscode.ExtensionContext): Promise<string | null> {
   const email = await vscode.window.showInputBox({ prompt: 'Enter your Vile email' });
@@ -11,7 +20,7 @@ export async function login(context: vscode.ExtensionContext): Promise<string | 
   const password = await vscode.window.showInputBox({ prompt: 'Enter your password', password: true });
   if (!password) return null;
 
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const supabase = await getSupabaseClient();
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
     vscode.window.showErrorMessage(`Login failed: ${error.message}`);
