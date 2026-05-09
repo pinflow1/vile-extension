@@ -1,12 +1,11 @@
 import * as vscode from 'vscode';
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = 'https://your-project.supabase.co'; // Replace
-const SUPABASE_ANON_KEY = 'your-anon-key'; // Replace
+// These placeholders will be replaced by GitHub Actions during build
+const SUPABASE_URL = '__SUPABASE_URL__';
+const SUPABASE_ANON_KEY = '__SUPABASE_ANON_KEY__';
 
 export async function login(context: vscode.ExtensionContext): Promise<string | null> {
-  // Use VS Code's built-in authentication or open a simple webview for Supabase login.
-  // For simplicity, we'll prompt for email and password (not ideal but works for MVP).
   const email = await vscode.window.showInputBox({ prompt: 'Enter your Vile email' });
   if (!email) return null;
   const password = await vscode.window.showInputBox({ prompt: 'Enter your password', password: true });
